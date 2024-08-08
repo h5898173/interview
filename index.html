@@ -5,23 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vue.js 3 + Chart.js + DataTables.js Example</title>
-    <!-- Vue.js 3 -->
     <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- DataTables.js -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 
-    <!-- You MUST include jQuery 3.4+ before Fomantic -->
+
     <link rel="stylesheet" type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.3/semantic.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.3/semantic.min.js"></script>
 
 
     <style>
-        /* Add custom CSS styles here */
         #app {
             padding: 20px;
             color: #222831;
@@ -48,13 +44,70 @@
 
         #dashboardChart {
             max-width: 400px;
-            max-height: 400px;
+            height: 400px;
             display: block;
             margin: auto;
         }
 
         .dataTables_wrapper>.dataTables_length {
             margin-bottom: 20px;
+        }
+
+        .title {
+            display: flex;
+            justify-content: center;
+            font-size: 24px;
+            
+           
+            margin: 10px 0;
+        }
+
+        .title-wrapper {
+            width: 70%;
+            display: flex;
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0); /* Gradient background */
+            padding: 20px;
+            border-radius: 8px;
+            color: #333;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            justify-content: space-between;
+        }
+        .title-wrapper p{
+            font-size: 30px;
+        }
+
+        .doughnut p {
+            display: flex;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .block2 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .info {
+            margin-left: 30px;
+            background-color: #faf3e0;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+
+        }
+
+        .text {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 6px;
+            background: linear-gradient(135deg, #ffffe0, #ffffff);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }   
+        .right{
+            display: flex;
+           align-items: center;
         }
     </style>
 </head>
@@ -66,12 +119,9 @@
                 <div class="header" bis_skin_checked="1">題目 1</div>
             </div>
             <div class="content" bis_skin_checked="1">
-                <!-- Error message -->
                 <div v-if="error">
                     <p>Error: {{ error }}</p>
                 </div>
-
-                <!-- DataTable -->
                 <table id="example" class="display ui celled table" style="width:100%">
                     <thead>
                         <tr>
@@ -83,7 +133,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Data will be inserted here by DataTables.js -->
+
                     </tbody>
                 </table>
             </div>
@@ -96,7 +146,7 @@
                     <div class="header" bis_skin_checked="1">題目 2</div>
                 </div>
                 <div class="content" bis_skin_checked="1">
-                    <!-- Chart.js Canvas -->
+
                     <div class="chart-container">
                         <canvas id="myBarChart" width="500" height="200"></canvas>
                     </div>
@@ -108,12 +158,6 @@
                 </div>
                 <div class="content" bis_skin_checked="1">
                     <div class="block">
-                        <!-- <div class="ui right labeled input" bis_skin_checked="1">
-                            <input v-model="oeeValue" type="text" placeholder="Enter weight..">
-                            <div class="ui basic label" bis_skin_checked="1">
-                                %
-                            </div>
-                        </div> -->
                         <div class="ui slider" id="slider-1"></div>
 
                         <div class="ui right labeled input" bis_skin_checked="1">
@@ -122,24 +166,29 @@
                                 %
                             </div>
                         </div>
-
-                        <div class="doughnut">
-                            <p v-if="dataGrid2">
-                                <strong> {{ dataGrid2.Grid_Data[0].EQP_NO }}</strong> <i class="external alternate icon"
-                                    style="visibility: visible;"></i>
-                            </p>
-                            <canvas id="dashboardChart"></canvas>
-                            <div>
-                                <p><span>{{ oeeValue }}</span>%</p>
+                        <div class="title">
+                            <div v-if="dataGrid2" class="title-wrapper">
+                                {{ dataGrid2.Grid_Data[0].EQP_NO }}
+                                <div class="right">
+                                    {{ dataGrid2.Grid_Data[0].STATUS }}
+                                    <i class="external alternate icon" style="visibility: visible; font-size: 24px;"></i>
+                                </div>
                             </div>
                         </div>
-                        <div v-if="dataGrid2" class="info">
-                            <p><strong>TOTAL_V:</strong> {{ dataGrid2.Grid_Data[0].TOTAL_V }}</p>
-                            <p><strong>TOTAL_I:</strong> {{ dataGrid2.Grid_Data[0].TOTAL_I }}</p>
-                            <p><strong>TOTAL_KW:</strong> 789</p>
-                            <p><strong>TOTAL_KWH:</strong> 111</p>
+                        <div class="block2">
+                            <div class="doughnut">
+                                <canvas id="dashboardChart"></canvas>
+                                <div>
+                                    <p><span>{{ oeeValue }}</span>%</p>
+                                </div>
+                            </div>
+                            <div v-if="dataGrid2" class="info">
+                                <div class="text"><p><strong>TOTAL_V:</strong> {{ dataGrid2.Grid_Data[0].TOTAL_V }}</p></div>
+                                <div class="text"><p><strong>TOTAL_I:</strong> {{ dataGrid2.Grid_Data[0].TOTAL_I }}</p></div>
+                                <div class="text"><p><strong>TOTAL_KW:</strong> {{ dataGrid2.Grid_Data[0].TOTAL_KW }}</p></div>
+                                <div class="text"><p><strong>TOTAL_KWH:</strong> {{ dataGrid2.Grid_Data[0].TOTAL_KWH }}</p></div> 
+                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -162,9 +211,9 @@
                 };
             },
             async created() {
-                await this.fetchChart();
-                await this.fetchData('323017369146913');  // 呼叫第一個 SID
-                await this.fetchData('355596298610595');  // 呼叫第二個 SID
+                this.fetchChart();
+                await this.fetchData('323017369146913');
+                await this.fetchData('355596298610595');
             },
             mounted() {
                 this.createDashboardChart();
@@ -189,21 +238,14 @@
                         if (!this.tokenKey) {
                             await this.fetchTokenKey();
                         }
+
                         const response = await fetch('http://cloud.weyutech.com/API_TEST/api/GetChart', {
                             method: 'POST',
                             headers: {
                                 'SID': '355597273880135',
                                 'TokenKey': this.tokenKey
                             }
-                        })
-                            .catch(() => fetch('https://cloud.weyutech.com/API_TEST/api/GetChart', {
-                                method: 'POST',
-                                headers: {
-                                    'SID': '355597273880135',
-                                    'TokenKey': this.tokenKey
-                                }
-                            }));
-
+                        });
 
                         if (!response.ok) {
                             throw new Error('Network response was not ok ' + response.statusText);
@@ -219,6 +261,8 @@
                         this.error = error.message;
                     }
                 },
+
+
                 async fetchData(sid) {
                     try {
                         if (!this.tokenKey) {
@@ -231,14 +275,7 @@
                                 'SID': sid,
                                 'TokenKey': this.tokenKey
                             }
-                        })
-                            .catch(() => fetch('https://cloud.weyutech.com/API_TEST/api/GetGrid', {
-                                method: 'POST',
-                                headers: {
-                                    'SID': sid,
-                                    'TokenKey': this.tokenKey
-                                }
-                            }));
+                        });
 
                         if (!response.ok) {
                             throw new Error('Network response was not ok ' + response.statusText);
@@ -246,11 +283,10 @@
 
                         const data = await response.json();
 
-                        // 根據 SID 儲存不同的資料
                         if (sid === '323017369146913') {
-                            this.dataGrid = data;  // 儲存第一個 SID 的資料
+                            this.dataGrid = data;
                         } else if (sid === '355596298610595') {
-                            this.dataGrid2 = data;  // 儲存第二個 SID 的資料
+                            this.dataGrid2 = data;
                         }
 
                         this.initializeDataTable();
@@ -277,17 +313,7 @@
                                 UID: 'DEMO',
                                 PWD: 'DEMO'
                             })
-                        })
-                            .catch(() => fetch('https://cloud.weyutech.com/API_TEST/api/WeyuLogin', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    UID: 'DEMO',
-                                    PWD: 'DEMO'
-                                })
-                            }));
+                        });
 
                         if (!response.ok) {
                             throw new Error('Network response was not ok ' + response.statusText);
