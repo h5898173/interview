@@ -57,29 +57,48 @@
             display: flex;
             justify-content: center;
             font-size: 24px;
-            
-           
+
+
             margin: 10px 0;
         }
 
         .title-wrapper {
             width: 70%;
             display: flex;
-            background: linear-gradient(135deg, #ffafbd, #ffc3a0); /* Gradient background */
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+            /* Gradient background */
             padding: 20px;
             border-radius: 8px;
             color: #333;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             justify-content: space-between;
         }
-        .title-wrapper p{
+
+        .title-wrapper p {
             font-size: 30px;
+        }
+
+        .doughnut {
+            position: relative;
+            display: grid;
         }
 
         .doughnut p {
             display: flex;
             justify-content: center;
             font-size: 18px;
+        }
+
+        .oeeValue {
+            position: absolute;
+            display: flex;
+            justify-self: center;
+            align-self: center;
+            margin-top: 20px;
+            font-size: 3em;
+            font-weight: 800;
+            padding-top: 30px;
+            color: rgba(32, 30, 67, 1);
         }
 
         .block2 {
@@ -90,7 +109,7 @@
 
         .info {
             margin-left: 30px;
-            background-color: #faf3e0;
+            background: linear-gradient(135deg, #201E43, rgb(32, 30, 67, .8));
             border-radius: 8px;
             padding: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -102,12 +121,13 @@
             margin: 10px 0;
             padding: 10px;
             border-radius: 6px;
-            background: linear-gradient(135deg, #ffffe0, #ffffff);
+            background: #fff;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }   
-        .right{
+        }
+
+        .right {
             display: flex;
-           align-items: center;
+            align-items: center;
         }
     </style>
 </head>
@@ -170,23 +190,32 @@
                             <div v-if="dataGrid2" class="title-wrapper">
                                 {{ dataGrid2.Grid_Data[0].EQP_NO }}
                                 <div class="right">
-                                    {{ dataGrid2.Grid_Data[0].STATUS }}
-                                    <i class="external alternate icon" style="visibility: visible; font-size: 24px;"></i>
+                                    {{ dataGrid2.Grid_Data[0].STATUS }} 
+                                    <i class="external alternate icon"
+                                        style="visibility: visible; font-size: 24px;"></i>
                                 </div>
                             </div>
                         </div>
                         <div class="block2">
                             <div class="doughnut">
                                 <canvas id="dashboardChart"></canvas>
-                                <div>
-                                    <p><span>{{ oeeValue }}</span>%</p>
+                                <div class="oeeValue">
+                                    {{ oeeValue }}<span>%</span>
                                 </div>
                             </div>
                             <div v-if="dataGrid2" class="info">
-                                <div class="text"><p><strong>TOTAL_V:</strong> {{ dataGrid2.Grid_Data[0].TOTAL_V }}</p></div>
-                                <div class="text"><p><strong>TOTAL_I:</strong> {{ dataGrid2.Grid_Data[0].TOTAL_I }}</p></div>
-                                <div class="text"><p><strong>TOTAL_KW:</strong> {{ dataGrid2.Grid_Data[0].TOTAL_KW }}</p></div>
-                                <div class="text"><p><strong>TOTAL_KWH:</strong> {{ dataGrid2.Grid_Data[0].TOTAL_KWH }}</p></div> 
+                                <div class="text">
+                                    <p><strong>TOTAL_V:</strong> {{ dataGrid2.Grid_Data[0].TOTAL_V }}</p>
+                                </div>
+                                <div class="text">
+                                    <p><strong>TOTAL_I:</strong> {{ dataGrid2.Grid_Data[0].TOTAL_I }}</p>
+                                </div>
+                                <div class="text">
+                                    <p><strong>TOTAL_KW:</strong> {{ dataGrid2.Grid_Data[0].TOTAL_KW }}</p>
+                                </div>
+                                <div class="text">
+                                    <p><strong>TOTAL_KWH:</strong> {{ dataGrid2.Grid_Data[0].TOTAL_KWH }}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
